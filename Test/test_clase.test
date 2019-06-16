@@ -1,0 +1,217 @@
+/**
+*@file Test/test_clase.test
+*@author Francisco Magdaleno <francisco.magdalenog@gmail.com>
+*@brief Tests sobre los metodos de la calculadora
+**/
+
+
+#include "../AppEjemplo/calculadora.hpp"
+
+static Calculadora c;
+static float exp;
+
+//Tests
+/**
+ * @brief Este método comprueba la resta de dos valores
+ **/
+void test_resta(void){
+	//resta positiva
+	c.setNum1(2);
+	c.setNum2(-5);
+	c.setOp('-');
+	exp=c.calcula();
+	CHECK_NE(c.getNum1(),c.getNum2());
+	CHECK_LT(c.getNum2(),c.getNum1());
+	CHECK_GT(c.getNum1(),c.getNum2());
+	CHECK_GT(exp,c.getNum1());
+	CHECK_EQ_INT(7,exp);
+
+	//resta negativa
+	c.setNum1(2);
+	c.setNum2(5);
+	c.setOp('-');
+	exp=c.calcula();
+	CHECK_EQ_INT(-3,exp);
+
+	//resta decimal positiva
+	c.setNum1(6.6);
+	c.setNum2(2.2);
+	c.setOp('-');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(4.4,exp);
+
+	//resta decimal negativa
+	c.setNum1(2.2);
+	c.setNum2(6.6);
+	c.setOp('-');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(-4.4,exp);
+	
+}
+
+/**
+ * @brief Este método comprueba la suma de dos valores
+ **/
+void test_suma (void)
+{
+	//suma positiva
+	c.setNum1(2);
+	c.setNum2(5);
+	c.setOp('+');
+	exp=c.calcula();
+	CHECK_EQ_INT(7,exp);
+
+	//suma negativa
+	c.setNum1(2);
+	c.setNum2(-5);
+	c.setOp('+');
+	exp=c.calcula();
+	CHECK_EQ_INT(-3,exp);
+
+	//suma decimal positiva
+	c.setNum1(6.6);
+	c.setNum2(2.2);
+	c.setOp('+');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(8.8,exp);
+
+	//suma decimal negativa
+	c.setNum1(2.2);
+	c.setNum2(-6.6);
+	c.setOp('+');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(-4.4,exp);
+	
+}
+
+/**
+ * @brief Este método comprueba la multiplicación de dos valores
+ **/
+void test_multiplicacion (void)
+{
+	//multiplicación positiva
+	c.setNum1(2);
+	c.setNum2(5);
+	c.setOp('*');
+	exp=c.calcula();
+	CHECK_EQ_INT(10,exp);
+
+	//multiplicación negativa
+	c.setNum1(2);
+	c.setNum2(-5);
+	c.setOp('*');
+	exp=c.calcula();
+	CHECK_EQ_INT(-10,exp);
+
+	//multiplicación decimal positiva
+	c.setNum1(2);
+	c.setNum2(2.5);
+	c.setOp('*');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(5,exp);
+
+	//multiplicación decimal negativa
+	c.setNum1(2);
+	c.setNum2(-2.5);
+	c.setOp('*');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(-5,exp);
+}
+
+/**
+ * @brief Este método comprueba la division de dos valores
+ **/
+void test_division (void)
+{
+	//division positiva
+	c.setNum1(6);
+	c.setNum2(2);
+	c.setOp('/');
+	exp=c.calcula();
+	CHECK_EQ_INT(3,exp);
+
+	//division negativa
+	c.setNum1(6);
+	c.setNum2(-2);
+	c.setOp('/');
+	exp=c.calcula();
+	CHECK_EQ_INT(-3,exp);
+
+	//division decimal positiva
+	c.setNum1(2.5);
+	c.setNum2(2);
+	c.setOp('/');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(1.25,exp);
+
+	//division decimal negativa
+	c.setNum1(2.5);
+	c.setNum2(-2);
+	c.setOp('/');
+	exp=c.calcula();
+	CHECK_EQ_FLOAT(-1.25,exp);
+}
+
+/**
+ * @brief Este método comprueba el modulo de dos valores
+ **/
+void test_modulo (void)
+{
+	//modul 0 positiu
+	c.setNum1(6);
+	c.setNum2(2);
+	c.setOp('%');
+	exp=c.calcula();
+	CHECK_EQ_INT(0,exp);
+
+	//modul 0 negatiu
+	c.setNum1(-6);
+	c.setNum2(2);
+	c.setOp('%');
+	exp=c.calcula();
+	CHECK_EQ_INT(0,exp);
+
+	//modul no 0 positiu
+	c.setNum1(23);
+	c.setNum2(2);
+	c.setOp('%');
+	exp=c.calcula();
+	CHECK_EQ_INT(1,exp);
+
+	//modul no 0 negatiu
+	c.setNum1(-23);
+	c.setNum2(2);
+	c.setOp('%');
+	exp=c.calcula();
+	CHECK_EQ_INT(1,exp);
+	
+}
+
+/**
+ * @brief Este método comprueba el correcto funcionamiento de las macros que no se usan en la calculadora. 
+ **/
+void test_defines (void){
+	CHECK_STREQ("hola mundo","hola mundo");
+	CHECK_STRNE("hola mundo","hola");
+	bool boolean = true;
+	CHECK_BOOLEAN_TRUE(boolean);
+	boolean = false;
+	CHECK_BOOLEAN_FALSE(boolean);
+	char* nulo = NULL;
+	CHECK_NULL_POINTER(nulo);
+}
+
+/**
+ * @brief Este método resume todos los demás en uno.
+ **/
+void test_cal_run_tests (void)
+{	
+	test_resta();
+	test_suma();
+	test_multiplicacion();
+	test_division();
+	test_modulo();
+	test_defines();
+}
+
+
